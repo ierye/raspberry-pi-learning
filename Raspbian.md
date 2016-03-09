@@ -109,7 +109,7 @@
    esac
    exit 0
    ```
-   按ctrl+o保存，ctrl+x退出nano编辑器。  
+   按ctrl+o保存后按回车，然后ctrl+x退出nano编辑器。  
 4. 给tightvncserver文件加执行权限，并更新开机启动列表
    ```bash
    pi@raspberrypi:~ $ sudo chmod 755 /etc/init.d/tightvncserver
