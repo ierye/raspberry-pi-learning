@@ -147,7 +147,7 @@ git帮助文档http://git-scm.com/book/zh
 2.`-P`指定端口号，P大写  
 3.`36396`服务器端口号  
 4.`~/.ssh/id_rsa.pub`要上传的本机文件的路径  
-5.`root@2-ye.wicp.net:/root/.ssh/authorized_keys/`***root***服务器用户名，***2-ye.wicp.net***服务器地址，***/root/.ssh/authorized_keys***将要上传文件在服务器的存储路径或者目标文件，注意不要丢了`@`符和`:`符。  
+5.`root@2-ye.wicp.net:/root/.ssh/authorized_keys`***root***服务器用户名，***2-ye.wicp.net***服务器地址，***/root/.ssh/authorized_keys***将要上传文件在服务器的存储路径或者目标文件，注意不要丢了`@`符和`:`符。  
 6.`-r`将目录下的目录递归拷贝  
 7.`.*`将隐藏文件也拷贝过去  
 
