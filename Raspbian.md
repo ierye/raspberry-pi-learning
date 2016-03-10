@@ -36,7 +36,8 @@
 2. 如果需要开启root登录权限，可登录***pi*** 用户后，在命令行下执行  
    `sudo passwd root`  
    根据提示输入两遍密码，然后再执行以下命令解锁root账户  
-   `sudo passwd --unlock root`
+   `sudo passwd --unlock root`  
+   修改`/etc/ssh/sshd_config`文件，将`PermitRootLogin without-password`改为`PermitRootLogin yes`，然后执行`sudo reboot`重启，即可使用root账户登录。
 3. 关闭root用户ssh登录  
    树莓派默认安装了SSH服务，SSH登录的方式为：`ssh pi@树莓派ip地址`，默认密码为：`raspberry`
    为了安全, 推荐关闭root用户ssh登录, 方法为修改`/etc/ssh/sshd_config`, 将 `PermitRootLogin yes`改为`PermitRootLogin no`
