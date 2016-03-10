@@ -130,15 +130,15 @@
    pi@raspberrypi:~ $ sudo ps ax | grep Xtightvnc | grep -v grep
    ```
 
-###2.6树莓派安装SVN
+###2.6 树莓派安装SVN
 
 
 
-###2.7树莓派安装GIT
+###2.7 树莓派安装GIT
 git帮助文档http://git-scm.com/book/zh
 
 
-###2.8上传文件到树莓派
+###2.8 上传文件到树莓派
 `$ scp -P 36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
 `$ scp -o port=36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
 `$ scp -P 36397 -r ~/.* root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
@@ -151,26 +151,78 @@ git帮助文档http://git-scm.com/book/zh
 6.`-r`将目录下的目录递归拷贝  
 7.`.*`将隐藏文件也拷贝过去  
 
-###2.9树莓派SSH公钥私钥生成
+###2.9 树莓派SSH公钥私钥生成
 `ssh`无密码登录要使用公钥与私钥。linux下可以使用`ssh-keygen`生成公钥/私钥对。
 示例:
 有电脑A(192.168.1.100)，电脑B(192.168.1.200)。
 现想电脑A通过ssh免密码登录到电脑B。
 首先以root账户登陆为例。  
 1.在A机下生成公钥/私钥对。  
-`$ ssh-keygen -t rsa -P ''`  
-`-P`表示密码，`-P ''` 就表示空密码，也可以不用-P参数，直接执行命令``这样就要三车回车，用`-P`就一次回车。  
-该命令将在`~/.ssh`目录下面产生一对密钥`id_rsa`和`id_rsa.pub`。  
+```
+[root@A ~]# ssh-keygen -t rsa -P ''
+```  
+命令解释:`-P`表示密码，`-P ''` 就表示空密码，也可以不用`-P`参数，直接执行命令`ssh-keygen -t rsa`，这样就要连续三次回车，用`-P`只需一次回车。  
+该命令将在`~/.ssh`目录下面产生一对密钥***id_rsa***和***id_rsa.pub***。  
 一般采用的ssh的rsa密钥:  
-`id_rsa`     私钥  
-`id_rsa.pub` 公钥  
+***id_rsa***私钥  
+--该用户默认的DSA身份认证私钥(SSH-2)  
+--此文件的权限应当至少限制为"600"  
+--生成密钥的时候可以指定采用密语来加密该私钥(3DES)  
+--ssh将在登录的时候读取这个文件。  
+***id_rsa.pub***公钥  
+--该用户默认的DSA身份认证公钥(SSH-2)。此文件无需保密。  
+--此文件的内容应该添加到所有DSA目标主机的 `~/.ssh/authorized_keys`文件中。  
 下述命令产生不同类型的密钥  
 `ssh-keygen -t dsa`  
 `ssh-keygen -t rsa`  
 `ssh-keygen -t rsa1`  
+2.把电脑A下的`~/.ssh/id_rsa.pub`复制到电脑B的 `/root/.ssh/authorized_keys`文件里（注意authorized_keys是文件不是文件夹）。如果B上没有***.ssh***文件夹则手动创建，创建好 /root/.ssh 这个目录，用`scp`命令将电脑A的***id_rsa.pub***文件中的内容复制到电脑B的***authorized_keys***文件中。  
+```
+[root@A ~]# scp ~/.ssh/id_rsa.pub root@192.168.1.200:/root/.ssh/authorized_keys
+```
+回车执行以上命令后输入电脑B的密码然后回车复制完成。   
+3.尝试ssh登录如果依然需要输入密码,请注意以下问题。  
+***.ssh***目录的权限要必须为700  
+***authorized_keys***文件的权限要必须为600   
+```
+[root@B ~]# chmod 700 /root/.ssh
+[root@B ~]# chmod 600 /root/.ssh/authorized_keys
+```
+注:**authorized_keys**和**authorized_keys2**的区别:  
+SSH protocols 1.3和1.5 使用`$HOME/.ssh/authorized_keys`文件   
+SSH protocol 2.0 使用`$HOME/.ssh/authorized_keys2`文件  
+在***OpenSSH version 3***以后，已不赞成使用***authorized_keys2***（虽然仍能用）。  
+所有的公钥都应该放在***authorized_keys***文件中。
 
-2.把电脑A下的`~/.ssh/id_rsa.pub`复制到B机的 `/root/.ssh/authorized_keys`文件里（注意authorized_keys是）。如果B上创建好 /root/.ssh 这个目录，用scp复制。
+总结:
+ssh登录的电脑(A)需要有私钥，被登录的电脑(B)要有登录电脑(A)的公钥。这个公钥/私钥对一般在私钥宿主机(电脑A)产生。上面是用rsa算法的公钥/私钥对，当然也可以用dsa(对应的文件是***id_dsa***，***id_dsa.pub***)。
+如果想让A、B两台电脑无密码相互登录，那么电脑B以上面同样的方式配置即可。
 
+###3.0 SSH-KeyGen的用法
+ 
+假设电脑A为客户机器，电脑B为目标机；
+
+要达到的目的：
+电脑A通过ssh登录电脑B无需输入密码；
+加密方式选rsa|dsa均可，默认dsa.
+
+做法：  
+1.登录A机器  
+2.`ssh-keygen -t [rsa|dsa]`，将会生成密钥文件和私钥文件 ***id_rsa***,***id_rsa.pub***或***id_dsa***,***id_dsa.pub***  
+3.将***.pub***文件复制到B机器的***.ssh***目录，登录电脑B并执行命令`cat id_dsa.pub >> ~/.ssh/authorized_keys`  
+4、大功告成，从电脑A登录电脑B的目标账户就不再需要密码了。
+ 
+ 
+ 
+ssh-keygen做密码验证可以使在向对方机器上ssh ,scp不用使用密码.
+具体方法如下:
+ssh-keygen -t rsa
+然后全部回车,采用默认值.
+
+这样生成了一对密钥，存放在用户目录的~/.ssh下。
+将公钥考到对方机器的用户目录下，并拷到~/.ssh/authorized_keys中。
+
+要保证.ssh和authorized_keys都只有用户自己有写权限。否则验证无效。
 
 
 
