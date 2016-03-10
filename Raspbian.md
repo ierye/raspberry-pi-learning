@@ -209,20 +209,16 @@ ssh登录的电脑(A)需要有私钥，被登录的电脑(B)要有登录电脑(A
 做法：  
 1.登录A机器  
 2.`ssh-keygen -t [rsa|dsa]`，将会生成密钥文件和私钥文件 ***id_rsa***,***id_rsa.pub***或***id_dsa***,***id_dsa.pub***  
-3.将***.pub***文件复制到B机器的***.ssh***目录，登录电脑B并执行命令`cat id_dsa.pub >> ~/.ssh/authorized_keys`  
-4、大功告成，从电脑A登录电脑B的目标账户就不再需要密码了。
- 
- 
- 
-ssh-keygen做密码验证可以使在向对方机器上ssh ,scp不用使用密码.
-具体方法如下:
-ssh-keygen -t rsa
-然后全部回车,采用默认值.
+3.将***.pub***文件复制到电脑B的***.ssh***目录，登录电脑B并执行命令`cat id_dsa.pub >> ~/.ssh/authorized_keys`  
+4.大功告成，从电脑A登录电脑B的目标账户就不再需要密码了。
 
+**ssh-keygen**做密码验证可以使在向对方电脑上ssh /scp不用使用密码。  
+具体方法如下:  
+`ssh-keygen -t rsa`  
+然后全部回车，采用默认值。  
 这样生成了一对密钥，存放在用户目录的~/.ssh下。
-将公钥考到对方机器的用户目录下，并拷到~/.ssh/authorized_keys中。
-
-要保证.ssh和authorized_keys都只有用户自己有写权限。否则验证无效。
+将公钥拷到对方电脑的用户目录下，并将内容拷贝到`~/.ssh/authorized_keys`文件中。  
+需要注意的是要保证**.ssh***和***authorized_keys***都只有用户自己有写权限。否则验证无效。
 
 
 
