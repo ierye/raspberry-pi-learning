@@ -152,7 +152,25 @@ git帮助文档http://git-scm.com/book/zh
 7.`.*`将隐藏文件也拷贝过去  
 
 ###2.9树莓派SSH公钥私钥生成
-http://blog.sina.com.cn/s/blog_4077692e0100qjkp.html
+`ssh`无密码登录要使用公钥与私钥。linux下可以使用`ssh-keygen`生成公钥/私钥对。
+示例:
+有电脑A(192.168.1.100)，电脑B(192.168.1.200)。
+现想电脑A通过ssh免密码登录到电脑B。
+首先以root账户登陆为例。  
+1.在A机下生成公钥/私钥对。  
+`$ ssh-keygen -t rsa -P ''`  
+`-P`表示密码，`-P ''` 就表示空密码，也可以不用-P参数，直接执行命令``这样就要三车回车，用`-P`就一次回车。  
+该命令将在`~/.ssh`目录下面产生一对密钥`id_rsa`和`id_rsa.pub`。  
+一般采用的ssh的rsa密钥:  
+`id_rsa`     私钥  
+`id_rsa.pub` 公钥  
+下述命令产生不同类型的密钥  
+`ssh-keygen -t dsa`  
+`ssh-keygen -t rsa`  
+`ssh-keygen -t rsa1`  
+
+2.把电脑A下的`~/.ssh/id_rsa.pub`复制到B机的 `/root/.ssh/authorized_keys`文件里（注意authorized_keys是）。如果B上创建好 /root/.ssh 这个目录，用scp复制。
+
 
 
 
