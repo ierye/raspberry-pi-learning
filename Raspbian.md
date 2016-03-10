@@ -143,7 +143,7 @@ git帮助文档http://git-scm.com/book/zh
 `$ scp -o port=36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
 `$ scp -P 36397 -r ~/.* root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
 命令解释如下:  
-1.`scp`上传写入命令  
+1.`scp`上传写入命令（***scp命令可以将文件上传到服务器指定目录下，也可将文件写入到指定的服务器文件中***）  
 2.`-P`指定端口号，P大写  
 3.`36396`服务器端口号  
 4.`~/.ssh/id_rsa.pub`要上传的本机文件的路径  
