@@ -135,21 +135,24 @@
 
 
 ###2.7树莓派安装GIT
+git帮助文档http://git-scm.com/book/zh
 
 
 ###2.8上传文件到树莓派
-`$ scp -P 36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys/`  
-`$ scp -o port=36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys/`  
-`$ scp -P 36397 -r ~/.* root@2-ye.wicp.net:/root/.ssh/authorized_keys/`  
+`$ scp -P 36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
+`$ scp -o port=36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
+`$ scp -P 36397 -r ~/.* root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
 命令解释如下:  
-1.`scp`上传命令  
+1.`scp`上传写入命令  
 2.`-P`指定端口号，P大写  
 3.`36396`服务器端口号  
 4.`~/.ssh/id_rsa.pub`要上传的本机文件的路径  
 5.`root@2-ye.wicp.net:/root/.ssh/authorized_keys/`***root***服务器用户名，***2-ye.wicp.net***服务器地址，***/root/.ssh/authorized_keys/***将要上传文件在服务器的存储路径，注意不要丢了`@`符和`:`符。  
 6.`-r`将目录下的目录递归拷贝  
-7.`.*`将隐藏文件也拷贝过去
+7.`.*`将隐藏文件也拷贝过去  
 
+###2.9树莓派SSH公钥私钥生成
+http://blog.sina.com.cn/s/blog_4077692e0100qjkp.html
 
 
 
