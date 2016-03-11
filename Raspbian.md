@@ -26,7 +26,10 @@
 3. change_timezone - 更改时区, 选择Asia – Shanghai;
 4. configure_keyboard - 选English（US）;
 5. change_local - 更改语言设置，选择`en_US.UTF-8`和`zh_CN.UTF-8`
-设置完成后，选择**Finish**，会提示是否重启，选择**Yes**.
+设置完成后，选择**Finish**，会提示是否重启，选择**Yes**;  `/sbin/ifconfig`查看树莓派IP地址(找到***inet addr:***后面的就是IP);  
+7.
+
+
 
 ####2.3 树莓派开启SSH root登录权限  
 1. Raspberry Pi 的 Raspbian 系统  
@@ -135,9 +138,27 @@
 
 
 ###2.7 树莓派安装GIT
-git帮助文档http://git-scm.com/book/zh
+git官方帮助文档http://git-scm.com/book/zh  
+**安装Git**  
+首先你需要在树莓派上安装Git.
+```
+pi@raspberrypi:~$ sudo apt-get install wget git-core
+```
+这将会安装Git服务器和必要的客户端软件。
 
-
+**安装SSH**  
+如果你还没有安装SSH，通过以下命令安装它：
+```
+pi@raspberrypi:~$ sudo apt-get install ssh
+```
+通过以下命令启动ssh：
+```
+pi@raspberrypi:~$ sudo /etc/init.d/ssh start
+```
+虽然ssh已经运行起来了，但是如果重启树莓派，就需要重新执行一遍上面命令。我们可以通过执行一次下面的命令来解决这个问题：
+```
+pi@raspberrypi:~$ sudo update-rc.d ssh defaults
+```
 ###2.8 上传文件到树莓派
 `$ scp -P 36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
 `$ scp -o port=36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
