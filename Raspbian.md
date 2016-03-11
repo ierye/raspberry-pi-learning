@@ -141,6 +141,7 @@ sudo leafpad /etc/hosts`替换所有***raspberrypi***为上一步输入的新主
 
 ###2.7 树莓派安装GIT
 git官方帮助文档http://git-scm.com/book/zh  
+阮一峰的博客(Git远程操作详解):http://www.ruanyifeng.com/blog/2014/06/git_remote.html  
 **1. 安装Git**  
 首先你需要在树莓派上安装Git.
 ```
@@ -161,8 +162,7 @@ pi@raspberrypi:~$ sudo /etc/init.d/ssh start
 ```
 pi@raspberrypi:~$ sudo update-rc.d ssh defaults
 ```
-**3. 添加一个”Git”用户和组**
-
+**3. 添加一个”Git”用户和组**  
 创建一个**Git**用户和用户组(注意这里要切换到root账户下操作，否则没有权限，另外***/home/git***是这个例子里我使用的文件夹，如果你想使用别的路径，替换下面命令里的***/home/git***即可)。
 ```
 root@raspberrypi:~# adduser --system --shell /bin/bash --gecos 'git version control by pi' --group --home /home/git git
@@ -188,9 +188,11 @@ git@raspberrypi:~$ mkdir test.git
 git@raspberrypi:~$ cd test.git
 git@raspberrypi:~/test.git$ git --bare init
 ```
-
-
-
+**5. 克隆代码到本地**  
+通过ssh协议克隆并指定git服务器ssh端口号:
+```
+LYGdeMacBook-Pro:~ LYG$ git clone ssh://git@2-ye.wicp.net:36397/home/git/test.git
+```
 ###2.8 上传文件到树莓派
 `$ scp -P 36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
 `$ scp -o port=36397 ~/.ssh/id_rsa.pub root@2-ye.wicp.net:/root/.ssh/authorized_keys2`  
